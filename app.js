@@ -1,9 +1,11 @@
-const express = require("express")
-const app = express()
+const express = require("express");
+const app = express();
+const connectDB = require("./configs/database");
 
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
+connectDB();
 
 
 app.listen(5000, ()=>{
