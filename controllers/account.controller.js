@@ -16,5 +16,9 @@ module.exports = {
             })
         }
         return res.status(200).json(account);
+    },
+    getAccounts: async(req, res)=>{
+        const accounts = await accountModel.find();
+        return res.status(200).json(accounts);
     }
 }

@@ -3,8 +3,13 @@ const router = express.Router()
 
 const {
     register,
-    login
+    login,
+    getAccounts
 } = require("../controllers/account.controller")
+
+router
+    .route("/")
+    .get(getAccounts);
 
 router
     .route("/login")
