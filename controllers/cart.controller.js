@@ -16,7 +16,20 @@ module.exports = {
             });
         } else {
             const items = cart.items;
-            items.push({food: food_id, quantity: quantity || 1});
+            const isExists = items.find((v)=> v.food == food_id);
+            if (isExists){
+                const items2 = items.map((v)=>{
+                    if (v.food == food_id){
+                        v.quantity++;
+                    }
+                    return v;
+                })
+
+                cart = await cartModel.findByIdAndUpdate(cart._id, {items2}, {new: true});
+            } else {
+                items.push({food: food_id, quantity: quantity || 1});
+            }
+
             cart = await cartModel.findByIdAndUpdate(cart._id, {items}, {new: true});
         }
 
