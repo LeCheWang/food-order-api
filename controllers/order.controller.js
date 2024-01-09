@@ -1,5 +1,6 @@
 const orderModel = require("../models/order.model");
 const cartModel = require("../models/cart.model");
+const mongoose = require("mongoose");
 
 module.exports = {
     createOrder: async (req, res) =>{
@@ -48,6 +49,32 @@ module.exports = {
                 }
             ]
         });
+
+        return res.status(200).json(orders);
+    },
+    getOrderByAccount: async(req, res)=>{
+        const account_id = req.params.account_id;
+        const carts = await cartModel.find({account_id, is_order: true});
+         
+        const orders = [];
+        
+        for (let cart of carts){
+            const order = await orderModel.findOne({
+                cart_id: cart._id
+            }).populate({
+                path: "cart_id",
+                populate: [
+                    {
+                        path: "account_id"
+                    },
+                    {
+                        path: "items.food"
+                    }
+                ]
+            });
+
+            orders.push(order);
+        }
 
         return res.status(200).json(orders);
     }
