@@ -35,6 +35,9 @@ const orderSchema = mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         ref: "cart"
     }
+}, {
+    versionKey: false,
+    timestamps: true
 })
 
 module.exports = mongoose.model("order", orderSchema);

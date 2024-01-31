@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 
 module.exports = {
     createOrder: async (req, res) =>{
-        const body = req.body;
+        const body = req.body; 
         const order = await orderModel.create(body);
         await cartModel.findByIdAndUpdate(body.cart_id, {is_order: true});
         
